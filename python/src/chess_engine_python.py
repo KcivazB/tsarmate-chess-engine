@@ -37,7 +37,7 @@ class Board():
         self.white_queen_bitboard[3] = 1
         self.white_king_bitboard[4] = 1
 
-        for i in range (8,15):
+        for i in range (8,16):
             self.white_pawn_bitboard[i] = 1
 
         self.black_rook_bitboard[63] = 1
@@ -49,5 +49,5 @@ class Board():
         self.black_queen_bitboard[59] = 1
         self.black_king_bitboard[60] = 1
         
-        for i in range (48,55):
+        for i in range (48,56):
             self.black_pawn_bitboard[i] = 1

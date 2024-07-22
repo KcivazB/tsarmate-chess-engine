@@ -1,5 +1,4 @@
-from board import Board
+from python.src.chess_engine_python import Board
 
 board = Board()
 
-print(board.white_bishop_bitboard, board.white_rook_bitboard)

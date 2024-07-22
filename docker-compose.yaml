@@ -7,6 +7,11 @@ services:
     container_name: chess_engine_python
     ports:
       - "5000:5000"
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/app/notebooks 
+    networks:
+      - chess-network
 
   # go:
   #   build:
@@ -14,12 +19,9 @@ services:
   #   container_name: chess_engine_go
   #   ports:
   #     - "6000:6000"
+  #   networks:
+  #     - chess-network
 
-  jupyter:
-    build:
-      context: ./jupyter
-    container_name: chess_engine_jupyter
-    ports:
-      - "8888:8888"
-    volumes:
-      - ./notebooks:/app/notebooks
+networks:
+  chess-network:
+    driver: bridge
