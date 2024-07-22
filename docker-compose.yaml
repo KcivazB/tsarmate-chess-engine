@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  python:
+    build:
+      context: ./python
+    container_name: chess_engine_python
+    ports:
+      - "5000:5000"
+
+  # go:
+  #   build:
+  #     context: ./go
+  #   container_name: chess_engine_go
+  #   ports:
+  #     - "6000:6000"
+
+  jupyter:
+    build:
+      context: ./jupyter
+    container_name: chess_engine_jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/app/notebooks
