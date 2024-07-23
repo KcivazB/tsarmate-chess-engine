@@ -10,7 +10,7 @@ class Board():
     #KING
     
     def __init__(self):
-        self.bitboard = {
+        self.bitboards = {
             'white_pawn' : np.zeros(64, dtype = int),
             'white_rook' : np.zeros(64, dtype = int),
             'white_knight' : np.zeros(64, dtype = int),
