@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 
-from ..src.chess_engine_python import Board
+from ..chess_engine_python import Board
 
 def test_initial_white_pieces():
     board = Board()

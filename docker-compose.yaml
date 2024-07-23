@@ -12,6 +12,8 @@ services:
       - ./notebooks:/app/notebooks 
     networks:
       - chess-network
+    environment:
+    - JUPYTER_TOKEN=easy
 
   # go:
   #   build:
