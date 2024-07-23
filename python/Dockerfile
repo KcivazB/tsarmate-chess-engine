@@ -3,11 +3,15 @@ FROM python:3.12-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the project code into the container
-COPY . /app
+# Copy the src directory into the container
+COPY ./src /app/src
+
+# Copy the tests directory into the container
+COPY ./tests /app/tests
 
 # Install dependencies
-RUN pip install -r requirements.txt
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 # Install Jupyter Notebook
 RUN pip install jupyter

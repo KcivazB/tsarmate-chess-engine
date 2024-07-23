@@ -1,4 +1,4 @@
-from chess_engine_python import Board
+from python.src.chess_engine import Board
 
 board = Board()
 print(board.get_bitboard_state())

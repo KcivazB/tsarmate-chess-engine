@@ -9,6 +9,8 @@ services:
       - "5000:5000"
       - "8888:8888"
     volumes:
+      - ./python/src:/app/src
+      - ./python/tests:/app/tests
       - ./notebooks:/app/notebooks 
     networks:
       - chess-network

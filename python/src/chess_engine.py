@@ -30,12 +30,20 @@ class Board():
     def get_bitboard_state(self):
         result = np.zeros(64, dtype = int)
         for bitboard in self.bitboards.values():
-            result = np.bitwise_or(bitboard, result)
+            result = np.bitwise_or(bitboard, result, dtype = int)
         return result
             
-    
-    def create_empty_bitmap(self):
-        return np.zeros(64)
+    def pretty_print(self):
+        combined_board = self.get_bitboard_state()
+        val = ''
+        for i, square in enumerate(combined_board):
+            if not i % 8:
+                val += '\n'
+            if square:
+                val += 'X'
+            else:
+                val += '-'
+        print(val)
         
     def init_pieces(self):
         self.bitboards['white_rook'][0] = 1
