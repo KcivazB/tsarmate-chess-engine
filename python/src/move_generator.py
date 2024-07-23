@@ -23,3 +23,30 @@ def generate_rook_moves(position):
 
     return moves
 
+def generate_bishop_moves(position):
+    directions = [7, 9, -7, -9]  # UpLeft, UpRight, DownLeft, DownRight
+    moves = []
+
+    row, col = divmod(position, 8)
+    
+    for direction in directions:
+        for i in range(1, 8):
+            new_position = position + direction * i
+
+            # Check if new_position is out of bounds
+            if new_position < 0 or new_position >= 64:
+                break
+            
+            new_row, new_col = divmod(new_position, 8)
+            
+            # Boundary checks to prevent wrapping around the edges
+            if abs(new_col - col) != i:
+                break
+
+            moves.append(new_position)
+    
+    return moves
+
+
+
+

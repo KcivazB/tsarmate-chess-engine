@@ -1,5 +1,5 @@
 import numpy as np
-from .move_generator import generate_rook_moves #, generate_knight_moves, generate_bishop_moves, generate_queen_moves, generate_king_moves, generate_pawn_moves
+from .move_generator import generate_rook_moves, generate_bishop_moves # generate_knight_moves, generate_queen_moves, generate_king_moves, generate_pawn_moves
 
 class Board():
     
@@ -28,16 +28,18 @@ class Board():
 
         self.init_pieces()
     
-    def get_bitboard_state(self):
+    def get_occupied_squares_bitboard(self):
         result = np.zeros(64, dtype = int)
         for bitboard in self.bitboards.values():
             result = np.bitwise_or(bitboard, result, dtype = int)
         return result
             
-    def pretty_print(self):
-        combined_board = self.get_bitboard_state()
+    def get_empty_squares_bitboard(self):
+        return 1- self.get_occupied_squares_bitboard()
+
+    def pretty_print_bitboard(self, bitboard):
         val = ''
-        for i, square in enumerate(combined_board):
+        for i, square in enumerate(bitboard):
             if not i % 8:
                 val += '\n'
             if square:
@@ -71,5 +73,10 @@ class Board():
         
     def get_rook_moves(self, position):
         all_moves = generate_rook_moves(position)
-        
+        #Check valid moves
+        return all_moves
+    
+    def get_bishop_moves(self, position):
+        all_moves = generate_bishop_moves(position)
+        #Check valid moves
         return all_moves
