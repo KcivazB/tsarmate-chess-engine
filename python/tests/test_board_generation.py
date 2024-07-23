@@ -1,7 +1,8 @@
 import pytest
 import numpy as np
 
-from python.src.chess_engine import Board
+from src.chess_engine import Board
+from src.move_generator import generate_rook_moves
 
 def test_initial_white_pieces():
     board = Board()
@@ -46,3 +47,18 @@ def test_bitboard_state():
     expected_pieces[48:56] = 1
 
     assert np.array_equal(state, expected_pieces), "The board state should match the expected initial position"
+
+def test_rook_moves():
+    board = Board()
+    rook_position = 0
+    valid_moves = board.get_rook_moves(rook_position)
+    expected_moves = [8, 16, 24, 32, 40, 48, 56, 1, 2, 3, 4, 5, 6, 7]
+    assert set(valid_moves) == set(expected_moves)
+
+def test_rook_moves_with_obstacles():
+    board = Board()
+    board.bitboards['white_rook'][8] = 1
+    rook_position = 0
+    valid_moves = board.get_rook_moves(rook_position)
+    expected_moves = []
+    assert set(valid_moves) == set(expected_moves)

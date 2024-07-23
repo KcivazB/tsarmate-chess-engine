@@ -1,4 +1,5 @@
 import numpy as np
+from .move_generator import generate_rook_moves #, generate_knight_moves, generate_bishop_moves, generate_queen_moves, generate_king_moves, generate_pawn_moves
 
 class Board():
     
@@ -67,3 +68,8 @@ class Board():
         self.bitboards['black_king'][60] = 1
         
         self.bitboards['black_pawn'][48:56] = 1
+        
+    def get_rook_moves(self, position):
+        all_moves = generate_rook_moves(position)
+        
+        return all_moves
