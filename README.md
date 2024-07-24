@@ -42,25 +42,11 @@ This project involves creating a scalable chess engine using Python and Go, adhe
 ## Setup Instructions
 
 ### Prerequisites
-- **Python**: [Install Python](https://www.python.org/downloads/)
-- **Go**: [Install Go](https://golang.org/doc/install)
 - **Docker**: [Install Docker](https://docs.docker.com/get-docker/)
 <!-- - **Kubernetes**: [Install Minikube](https://minikube.sigs.k8s.io/docs/start/) -->
 
-### Python
-1. Clone the repository: `git clone <repo-url>`
-2. Navigate to `chess_engine_python/`.
-3. Install dependencies: `pip install -r requirements.txt`
-4. Run tests: `pytest`
-
-### Go
-1. Clone the repository: `git clone <repo-url>`
-2. Navigate to `chess_engine_go/`.
-3. Build the application: `go build`
-4. Run tests: `go test ./...`
-
 ### Docker
-1. Navigate to `chess_engine/`.
+1. Navigate to `tsarmate_chess_engine/`.
 2. Build Docker images: `docker-compose build`
 3. Run Docker containers: `docker-compose up`
 
