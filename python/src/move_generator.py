@@ -96,6 +96,11 @@ def generate_king_moves(position):
         moves.append(new_position)
     return moves
 
+#TODO ADD THE CONDITIONS FOR CASTLING 
+#   Not moved yet
+#   Not in chess AND Not ending in chess
+#   None of the squares moving through is in chess
+
 def generate_knight_moves(position):
     moves = []
     directions = [6, 15, 17, 10, -6, -15, -17, -10]  # NoWeWe, NoNoWe, NoNoEa, NoEaEa, SoEeEa, SoSoEa, SoSoWe, SoweWe
@@ -116,4 +121,16 @@ def generate_knight_moves(position):
         elif abs(current_row - new_row) == 1 and abs(current_col - new_col) == 2:
             moves.append(new_position)
 
+    return moves
+
+
+#TODO ADD THE CONDITIONS FOR PAWN PUSH + EN PASSANT + PROMOTE
+def generate_pawn_moves(position):
+    directions = [7, 8, 9, 16]
+    moves = []
+
+    for direction in directions : 
+        new_position = position + direction 
+
+        moves.append(new_position)
     return moves
