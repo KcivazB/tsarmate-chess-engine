@@ -1,5 +1,5 @@
 import numpy as np
-from .move_generator import generate_rook_moves, generate_bishop_moves # generate_knight_moves, generate_queen_moves, generate_king_moves, generate_pawn_moves
+from .move_generator import generate_rook_moves, generate_bishop_moves, generate_queen_moves # generate_knight_moves, generate_king_moves, generate_pawn_moves
 
 class Board():
     
@@ -78,5 +78,10 @@ class Board():
     
     def get_bishop_moves(self, position):
         all_moves = generate_bishop_moves(position)
+        #Check valid moves
+        return all_moves
+    
+    def get_queen_moves(self, position):
+        all_moves = generate_queen_moves(position)
         #Check valid moves
         return all_moves

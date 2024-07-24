@@ -53,3 +53,9 @@ def generate_bishop_moves(position):
 
     return moves
 
+#Queen moves is the combination of rook and bishop moves. So here we go 
+def generate_queen_moves(position): 
+    rook_moves = generate_rook_moves(position)
+    bishop_moves = generate_bishop_moves(position)
+    moves = np.union1d(rook_moves, bishop_moves)
+    return moves 
