@@ -27,8 +27,6 @@ def generate_bishop_moves(position):
     directions = [7, 9, -7, -9]  # UpLeft, UpRight, DownLeft, DownRight
     moves = []
 
-    row, col = divmod(position, 8)
-    
     for direction in directions:
         for i in range(1, 8):
             new_position = position + direction * i
@@ -36,17 +34,22 @@ def generate_bishop_moves(position):
             # Check if new_position is out of bounds
             if new_position < 0 or new_position >= 64:
                 break
-            
-            new_row, new_col = divmod(new_position, 8)
-            
+
             # Boundary checks to prevent wrapping around the edges
-            if abs(new_col - col) != i:
-                break
+            new_row = new_position // 8
+            new_col = new_position % 8
+
+            # Moving up-left or down-right
+            if direction in [7, -9]:
+                if new_col > position % 8 or abs(new_row - position // 8) != abs(new_col - position % 8):
+                    break
+
+            # Moving up-right or down-left
+            if direction in [9, -7]:
+                if new_col < position % 8 or abs(new_row - position // 8) != abs(new_col - position % 8):
+                    break
 
             moves.append(new_position)
-    
+
     return moves
-
-
-
 
