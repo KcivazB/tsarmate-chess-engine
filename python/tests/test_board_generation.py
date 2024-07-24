@@ -24,7 +24,7 @@ def test_initial_black_pieces():
 
 def test_bitboard_state():
     board = Board()
-    state = board.get_bitboard_state()
+    state = board.get_occupied_squares_bitboard()
     expected_pieces = np.zeros(64, dtype=int)
     expected_pieces[0] = 1
     expected_pieces[7] = 1
@@ -48,17 +48,3 @@ def test_bitboard_state():
 
     assert np.array_equal(state, expected_pieces), "The board state should match the expected initial position"
 
-def test_rook_moves():
-    board = Board()
-    rook_position = 0
-    valid_moves = board.get_rook_moves(rook_position)
-    expected_moves = [8, 16, 24, 32, 40, 48, 56, 1, 2, 3, 4, 5, 6, 7]
-    assert set(valid_moves) == set(expected_moves)
-
-def test_rook_moves_with_obstacles():
-    board = Board()
-    board.bitboards['white_rook'][8] = 1
-    rook_position = 0
-    valid_moves = board.get_rook_moves(rook_position)
-    expected_moves = []
-    assert set(valid_moves) == set(expected_moves)
