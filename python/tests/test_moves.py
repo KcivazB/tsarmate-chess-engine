@@ -2,7 +2,6 @@ import pytest
 import numpy as np
 
 from src.board import Board
-from src.move_generator import generate_rook_moves
 
 def test_rook_moves():
     board = Board()
@@ -32,4 +31,11 @@ def test_queen_moves():
     queen_position = 'd1'
     valid_moves = board.get_queen_moves(queen_position)
     expected_moves = ['a1', 'b1', 'c1', 'e1', 'f1', 'g1', 'h1', 'c2', 'd2', 'e2', 'b3', 'd3', 'f3', 'a4', 'd4', 'g4', 'd5', 'h5', 'd6', 'd7', 'd8']
+    assert set(valid_moves) == set(expected_moves)
+
+def test_king_moves():
+    board = Board()
+    queen_position = 'e1'
+    valid_moves = board.get_king_moves(queen_position)
+    expected_moves = ['d1', 'd2', 'e2', 'f2', 'f1']
     assert set(valid_moves) == set(expected_moves)

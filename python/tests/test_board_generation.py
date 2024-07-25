@@ -24,7 +24,7 @@ def test_initial_black_pieces():
 
 def test_bitboard_state():
     board = Board()
-    state = board.get_occupied_squares_bitboard()
+    state = board.occupied_squares_bb
     expected_pieces = np.zeros(64, dtype=int)
     expected_pieces[0] = 1
     expected_pieces[7] = 1
