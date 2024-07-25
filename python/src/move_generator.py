@@ -81,7 +81,6 @@ def generate_king_moves(position):
         if direction == -1 and new_position % 8 == 7:  # Moving left
             break
 
-
         # Moving up-left or down-right
         if direction in [7, -9]:
             if new_col > position % 8 or abs(new_row - position // 8) != abs(new_col - position % 8):

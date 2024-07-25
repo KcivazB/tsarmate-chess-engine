@@ -17,4 +17,3 @@ def test_conversion_chess_notation_to_index():
     result = board.chess_notation_to_index(chess_notation)
     expected_index = 63
     assert result == expected_index
-

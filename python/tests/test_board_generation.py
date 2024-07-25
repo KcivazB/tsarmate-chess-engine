@@ -47,4 +47,3 @@ def test_bitboard_state():
     expected_pieces[48:56] = 1
 
     assert np.array_equal(state, expected_pieces), "The board state should match the expected initial position"
-

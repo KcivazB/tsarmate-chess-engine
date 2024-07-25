@@ -25,6 +25,36 @@ class Board:
             'black_king': np.zeros(64, dtype=int),
         }
 
+        self.chars = {
+            'white_pawn': "P",
+            'white_rook': "R",
+            'white_knight': "N",
+            'white_bishop': "B",
+            'white_queen': "Q",
+            'white_king': "K",
+            'black_pawn': "p",
+            'black_rook': "r",
+            'black_knight': "n",
+            'black_bishop': "b",
+            'black_queen': "q",
+            'black_king': "k",
+        }
+        
+        self.symbols = {
+            'white_pawn': "P",
+            'white_rook': "R",
+            'white_knight': "N",
+            'white_bishop': "B",
+            'white_queen': "Q",
+            'white_king': "K",
+            'black_pawn': "p",
+            'black_rook': "r",
+            'black_knight': "n",
+            'black_bishop': "b",
+            'black_queen': "q",
+            'black_king': "k",
+        }
+        
         self.init_pieces()
 
     def get_occupied_squares_bitboard(self):
@@ -46,7 +76,10 @@ class Board:
             for file in range(8):
                 index = (7 - rank) * 8 + file
                 if bitboard[index]:
-                    row += 'X '
+                    for piece, piece_bitboard in self.bitboards.items():
+                        if piece_bitboard[index]:
+                            row += self.symbols[piece] + ' '
+                            break 
                 else:
                     row += '- '
             val += row + ' ' + ranks[7 - rank] + '\n'
@@ -103,25 +136,45 @@ class Board:
     
     def get_rook_moves(self, notation):
         position = self.chess_notation_to_index(notation)
-        all_moves = generate_rook_moves(position)
-        return [self.index_to_chess_notation(move) for move in all_moves]
+        occupied_squares = self.get_occupied_squares_bitboard()
+        self.pretty_print_bitboard(occupied_squares)
+        potential_moves = generate_rook_moves(position)
+        
+        valid_moves = []
+        for move in potential_moves:
+            print("move : " + str(move))
+            if self.is_path_clear(position, move, occupied_squares):
+                print("Path is clear in " + str(move))
+                valid_moves.append(move)
+
+        return [self.index_to_chess_notation(move) for move in valid_moves]
 
     def get_bishop_moves(self, notation):
         position = self.chess_notation_to_index(notation)
-        all_moves = generate_bishop_moves(position)
-        return [self.index_to_chess_notation(move) for move in all_moves]
+        occupied_squares = self.get_occupied_squares_bitboard()
+
+        potential_moves = generate_bishop_moves(position)
+        return [self.index_to_chess_notation(move) for move in potential_moves]
 
     def get_queen_moves(self, notation):
         position = self.chess_notation_to_index(notation)
-        all_moves = generate_queen_moves(position)
-        return [self.index_to_chess_notation(move) for move in all_moves]
+        occupied_squares = self.get_occupied_squares_bitboard()
+
+        potential_moves = generate_queen_moves(position)
+        return [self.index_to_chess_notation(move) for move in potential_moves]
 
     def get_king_moves(self, notation):
         position = self.chess_notation_to_index(notation)
-        all_moves = generate_king_moves(position)
-        return [self.index_to_chess_notation(move) for move in all_moves]
+        occupied_squares = self.get_occupied_squares_bitboard()
+
+        potential_moves = generate_king_moves(position)
+        return [self.index_to_chess_notation(move) for move in potential_moves]
 
     def get_knight_moves(self, notation):
         position = self.chess_notation_to_index(notation)
-        all_moves = generate_knight_moves(position)
-        return [self.index_to_chess_notation(move) for move in all_moves]
+        occupied_squares = self.get_occupied_squares_bitboard()
+
+        potential_moves = generate_knight_moves(position)
+        return [self.index_to_chess_notation(move) for move in potential_moves]
+
+   
