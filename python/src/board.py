@@ -1,6 +1,6 @@
 import numpy as np
 from .move_generator import generate_rook_moves, generate_bishop_moves, generate_queen_moves, generate_king_moves, generate_knight_moves  # generate_pawn_moves
-
+from .utils import index_to_chess_notation, chess_notation_to_index
 class Board:
     # PAWNS
     # ROOKS
@@ -57,35 +57,22 @@ class Board:
         
         self.init_pieces()
 
-    def get_occupied_squares_bitboard(self):
-        result = np.zeros(64, dtype=int)
-        for bitboard in self.bitboards.values():
-            result = np.bitwise_or(bitboard, result, dtype=int)
-        return result
+    @property
+    def white_pieces_bb(self):
+        return self.bitboards['white_pawn'] | self.bitboards['white_rook'] | self.bitboards['white_knight'] | self.bitboards['white_bishop'] | self.bitboards['white_queen'] | self.bitboards['white_king']
 
-    def get_empty_squares_bitboard(self):
-        return 1 - self.get_occupied_squares_bitboard()
+    @property
+    def black_pieces_bb(self):
+        return self.bitboards['black_pawn'] | self.bitboards['black_rook'] | self.bitboards['black_knight'] | self.bitboards['black_bishop'] | self.bitboards['black_queen'] | self.bitboards['black_king']
 
-    def pretty_print_bitboard(self, bitboard):
-        files = 'abcdefgh'
-        ranks = '12345678'
-        val = '  ' + ' '.join(files) + '\n'
-        
-        for rank in range(8):
-            row = ranks[7 - rank] + ' '
-            for file in range(8):
-                index = (7 - rank) * 8 + file
-                if bitboard[index]:
-                    for piece, piece_bitboard in self.bitboards.items():
-                        if piece_bitboard[index]:
-                            row += self.symbols[piece] + ' '
-                            break 
-                else:
-                    row += '- '
-            val += row + ' ' + ranks[7 - rank] + '\n'
-        
-        val += '  ' + ' '.join(files)
-        print(val)
+    @property
+    def empty_squares_bb(self):
+        return ~self.occupied_squares_bb
+
+    @property
+    def occupied_squares_bb(self):
+        return self.white_pieces_bb | self.black_pieces_bb
+    
 
     def init_pieces(self):
         self.bitboards['white_rook'][0] = 1
@@ -110,64 +97,64 @@ class Board:
 
         self.bitboards['black_pawn'][48:56] = 1
 
-    def index_to_chess_notation(self, index):
-        files = 'abcdefgh'
-        ranks = '12345678'
-        col = files[index % 8]
-        row = ranks[index // 8]
-        return f"{col}{row}"
-
-    def chess_notation_to_index(self, notation):
-        files = 'abcdefgh'
-        ranks = '12345678'
-        
-        # Extract file and rank from notation
-        file = notation[0]
-        rank = notation[1]
-        
-        # Calculate file index (0 for 'a', 1 for 'b', ..., 7 for 'h')
-        file_index = files.index(file)
-        
-        # Calculate rank index (0 for '1', 1 for '2', ..., 7 for '8')
-        rank_index = int(rank) - 1
-        
-        # Calculate and return board index
-        return rank_index * 8 + file_index    
-    
     def get_rook_moves(self, notation):
-        position = self.chess_notation_to_index(notation)
-        occupied_squares = self.get_occupied_squares_bitboard()
-        self.pretty_print_bitboard(occupied_squares)
+        position = chess_notation_to_index(notation)
+        occupied_squares = self.occupied_squares_bb
         potential_moves = generate_rook_moves(position)
-
-        return [self.index_to_chess_notation(move) for move in potential_moves]
+        
+        #Check for move validity here and loop over valid moves
+        return [index_to_chess_notation(move) for move in potential_moves]
 
     def get_bishop_moves(self, notation):
-        position = self.chess_notation_to_index(notation)
-        occupied_squares = self.get_occupied_squares_bitboard()
-
+        position = chess_notation_to_index(notation)
+        occupied_squares = self.occupied_squares_bb
         potential_moves = generate_bishop_moves(position)
-        return [self.index_to_chess_notation(move) for move in potential_moves]
+
+        #Check for move validity here and loop over valid moves
+        return [index_to_chess_notation(move) for move in potential_moves]
 
     def get_queen_moves(self, notation):
-        position = self.chess_notation_to_index(notation)
-        occupied_squares = self.get_occupied_squares_bitboard()
-
+        position = chess_notation_to_index(notation)
+        occupied_squares = self.occupied_squares_bb
         potential_moves = generate_queen_moves(position)
-        return [self.index_to_chess_notation(move) for move in potential_moves]
+
+        #Check for move validity here and loop over valid moves
+        return [index_to_chess_notation(move) for move in potential_moves]
 
     def get_king_moves(self, notation):
-        position = self.chess_notation_to_index(notation)
-        occupied_squares = self.get_occupied_squares_bitboard()
-
+        position = chess_notation_to_index(notation)
+        occupied_squares = self.occupied_squares_bb
         potential_moves = generate_king_moves(position)
-        return [self.index_to_chess_notation(move) for move in potential_moves]
+
+        #Check for move validity here and loop over valid moves
+        return [index_to_chess_notation(move) for move in potential_moves]
 
     def get_knight_moves(self, notation):
-        position = self.chess_notation_to_index(notation)
-        occupied_squares = self.get_occupied_squares_bitboard()
-
+        position = chess_notation_to_index(notation)
+        occupied_squares = self.occupied_squares_bb
         potential_moves = generate_knight_moves(position)
-        return [self.index_to_chess_notation(move) for move in potential_moves]
+
+        #Check for move validity here and loop over valid moves
+        return [index_to_chess_notation(move) for move in potential_moves]
 
    
+    def pretty_print_bitboard(self, bitboard):
+        files = 'abcdefgh'
+        ranks = '12345678'
+        val = '  ' + ' '.join(files) + '\n'
+        
+        for rank in range(8):
+            row = ranks[7 - rank] + ' '
+            for file in range(8):
+                index = (7 - rank) * 8 + file
+                if bitboard[index]:
+                    for piece, piece_bitboard in self.bitboards.items():
+                        if piece_bitboard[index]:
+                            row += self.symbols[piece] + ' '
+                            break 
+                else:
+                    row += '- '
+            val += row + ' ' + ranks[7 - rank] + '\n'
+        
+        val += '  ' + ' '.join(files)
+        print(val)

@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 
-from src.chess_engine import Board
+from src.board import Board
 from src.move_generator import generate_rook_moves
 
 def test_initial_white_pieces():
