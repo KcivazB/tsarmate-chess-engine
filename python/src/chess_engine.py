@@ -139,15 +139,8 @@ class Board:
         occupied_squares = self.get_occupied_squares_bitboard()
         self.pretty_print_bitboard(occupied_squares)
         potential_moves = generate_rook_moves(position)
-        
-        valid_moves = []
-        for move in potential_moves:
-            print("move : " + str(move))
-            if self.is_path_clear(position, move, occupied_squares):
-                print("Path is clear in " + str(move))
-                valid_moves.append(move)
 
-        return [self.index_to_chess_notation(move) for move in valid_moves]
+        return [self.index_to_chess_notation(move) for move in potential_moves]
 
     def get_bishop_moves(self, notation):
         position = self.chess_notation_to_index(notation)
