@@ -13,10 +13,10 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy the source code into the container
-COPY src/ ./src
+COPY / ./
 
 # Build the Go application
-RUN go build -o main ./src
+RUN go build -o main ./
 
 # Set the entry point for the container
 CMD ["./main"]
